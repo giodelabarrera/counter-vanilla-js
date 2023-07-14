@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="src/styles.css" />
   </head>
 
   <body>
@@ -17,12 +18,12 @@
       <h1>Counter</h1>
     </header>
 
-    <main id="main">
-      <div id="count" class="count pepe">0</div>
+    <main>
+      <output id="count" class="count" aria-live="polite">0</output>
 
       <div class="btn-container">
-        <button id="btn-increment" class="btn">Increment</button>
-        <button id="btn-decrement" class="btn">Decrement</button>
+        <button id="btn-increase" class="btn">Increase</button>
+        <button id="btn-decrease" class="btn">Decrease</button>
       </div>
     </main>
 

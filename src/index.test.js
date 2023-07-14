@@ -1,23 +1,50 @@
-import { getByText } from "@testing-library/dom";
-import "@testing-library/jest-dom/extend-expect";
-import { JSDOM } from "jsdom";
 import fs from "fs";
 import path from "path";
+import { JSDOM } from "jsdom";
+import { screen } from "@testing-library/dom";
+import userEvent from "@testing-library/user-event";
 
-const html = fs.readFileSync(path.resolve(__dirname, "../index.html"), "utf8");
+function renderDOM() {
+  const html = fs.readFileSync(
+    path.resolve(__dirname, "../index.html"),
+    "utf8"
+  );
+  const dom = new JSDOM(html);
+  document.body.innerHTML = dom.window.document.body.innerHTML;
+}
 
-let dom;
-let container;
+function loadScript() {
+  return import("./index.js");
+}
 
-beforeEach(() => {
-  // Constructing a new JSDOM with this option is the key
-  // to getting the code in the script tag to execute.
-  // This is indeed dangerous and should only be done with trusted content.
-  // https://github.com/jsdom/jsdom#executing-scripts
-  dom = new JSDOM(html, { runScripts: "dangerously" });
-  container = dom.window.document.body;
-});
+function render() {
+  return new Promise((resolve, reject) => {
+    try {
+      renderDOM();
+    } catch (err) {
+      reject(err);
+    }
+    loadScript().then(resolve, reject);
+  });
+}
 
-it("should render correctly", () => {
-  expect(2).toBe(2);
+it("should counter work correctly", async () => {
+  const user = userEvent.setup();
+
+  await render();
+
+  // initial
+  expect(screen.getByRole("status")).toHaveTextContent("0");
+
+  // increase
+  const increaseBtn = screen.getByRole("button", { name: /increase/i });
+  await user.click(increaseBtn);
+  expect(screen.getByRole("status")).toHaveTextContent("1");
+
+  // decrease
+  const decreaseBtn = screen.getByRole("button", { name: /decrease/i });
+  await user.click(decreaseBtn);
+  expect(screen.getByRole("status")).toHaveTextContent("0");
+  await user.click(decreaseBtn);
+  expect(screen.getByRole("status")).toHaveTextContent("-1");
 });

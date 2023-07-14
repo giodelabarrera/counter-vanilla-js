@@ -1,14 +1,12 @@
-import "./styles.css";
-
 const countEl = document.getElementById("count");
-const btnIncrementEl = document.getElementById("btn-increment");
-const btnDecrementEl = document.getElementById("btn-decrement");
+const btnIncreaseEl = document.getElementById("btn-increase");
+const btnDecreaseEl = document.getElementById("btn-decrease");
 
-btnIncrementEl.addEventListener("click", function (e) {
+btnIncreaseEl.addEventListener("click", function (e) {
   countEl.textContent = Number(countEl.textContent) + 1;
 });
 
-btnDecrementEl.addEventListener("click", function (e) {
+btnDecreaseEl.addEventListener("click", function (e) {
   countEl.textContent = Number(countEl.textContent) - 1;
 });
 
