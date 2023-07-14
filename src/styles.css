@@ -1,0 +1,45 @@
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: khaki;
+  display: flex;
+  height: 120px;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  background-color: beige;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.count {
+  font-size: 8rem;
+}
+
+.btn {
+  font-size: 2rem;
+  padding: 1rem;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
