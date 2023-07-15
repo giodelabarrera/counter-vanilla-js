@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { JSDOM } from "jsdom";
+import "@testing-library/jest-dom/extend-expect";
 import { screen } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 
@@ -9,8 +9,8 @@ function renderDOM() {
     path.resolve(__dirname, "../index.html"),
     "utf8"
   );
-  const dom = new JSDOM(html);
-  document.body.innerHTML = dom.window.document.body.innerHTML;
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  document.body.innerHTML = doc.body.innerHTML;
 }
 
 function loadScript() {
